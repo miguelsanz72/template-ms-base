@@ -5,7 +5,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { envs } from './config';
 import { ValidationExceptionFilter } from '@common';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const logger = new Logger('Main');
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
