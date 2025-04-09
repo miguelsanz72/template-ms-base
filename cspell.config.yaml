@@ -1,0 +1,14 @@
+version: '0.2'
+ignorePaths:
+  - README.md
+dictionaryDefinitions: []
+dictionaries: []
+words:
+  - Anestesia
+  - dtos
+  - GITHUB
+  - Kuma
+  - nestjs
+  - postgresql
+ignoreWords: []
+import: []

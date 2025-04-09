@@ -18,7 +18,7 @@ export interface IPhotoUrl extends Partial<IFile> {
 }
 
 export interface IDataBaseUser {
-    user_name   : string;
+    username   : string;
     avatar      : IPhotoUrl;
 }
 
@@ -26,6 +26,10 @@ export interface IResponseList {
     page        : number;
     per_page    : number;
     total_count : number;
+}
+
+export interface IResponseOnlyMessage {
+    message: string;
 }
   
 

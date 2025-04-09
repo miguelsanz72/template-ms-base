@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HealthDto } from './health-check.dto';
@@ -7,7 +6,7 @@ import { HealthDto } from './health-check.dto';
 export class HealthService {
   logger: Logger;
 
-  constructor(private configService: ConfigService) {
+  constructor(private _configService: ConfigService) {
     this.logger = new Logger('HealthCheck');
   }
 
@@ -21,10 +20,10 @@ export class HealthService {
     return {
       nodeVersion: process.version,
       uptime: process.uptime(),
-      environment: this.configService.get('NODE_ENV'),
-      service: this.configService.get('npm_package_name'),
-      appVersionPackage: this.configService.get('npm_package_version'),
-      description: this.configService.get('npm_package_description'),
+      environment: this._configService.get('NODE_ENV'),
+      service: this._configService.get('npm_package_name'),
+      appVersionPackage: this._configService.get('npm_package_version'),
+      description: this._configService.get('npm_package_description'),
     };
   }
 
@@ -32,7 +31,6 @@ export class HealthService {
     return 'Ok!';
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   getWhoami(user: any): string {
     this.logger.log({ user }, `${HealthService.name}:${this.getWhoami.name}`);
     return `Hi ${user.userName}`;

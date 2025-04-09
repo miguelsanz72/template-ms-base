@@ -2,7 +2,7 @@ import { RpcException } from '@nestjs/microservices';
 import { Logger } from '@nestjs/common';
 
 export class CustomRpcException extends RpcException {
-  private logger: Logger;
+  private _logger: Logger;
 
   constructor(errorData: {
     status: number;
@@ -16,12 +16,12 @@ export class CustomRpcException extends RpcException {
       error: errorData.innerError ? errorData.innerError.toString() : undefined,
     });
 
-    this.logger = new Logger(errorData.module);
-    this.logError(errorData.message, errorData.innerError);
+    this._logger = new Logger(errorData.module);
+    this._logError(errorData.message, errorData.innerError);
   }
 
-  private logError(message: string, innerError?: Error): void {
+  private _logError(message: string, innerError?: Error): void {
     // Log the error with its stack trace if available
-    this.logger.error(message, innerError?.stack);
+    this._logger.error(message, innerError?.stack);
   }
 }

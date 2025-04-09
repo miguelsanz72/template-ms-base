@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApiProperty } from '@nestjs/swagger';
 class DetailsProperties {
   @ApiProperty()
@@ -31,7 +30,7 @@ export class ErrorResponseDto {
   details: any[] | null;
 }
 
-export interface IErrordata {
+export interface IErrorData {
   message: string;
   statusCode: number;
   module: string;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import 'dotenv/config';
 import * as Joi from 'joi';
 import { IEnvVars } from './envs.interface';
@@ -9,6 +10,7 @@ const eventsShema = Joi.object({
   PORT: Joi.number().required(),
   NATS_SERVERS: Joi.array().items(Joi.string()).required(),
   JWT_SECRET: Joi.string().required(),
+  API_URL: Joi.string().required(),
 });
 
 const { error } = eventsShema.validate(

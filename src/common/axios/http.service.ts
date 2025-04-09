@@ -1,7 +1,7 @@
 // helpers/axios-service.ts
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { HttpStatus } from '@nestjs/common';
-import { CustomError } from '@helpers';
+import { handleError } from '../exceptions';
 
 export class AxiosService {
   async getRequest(
@@ -9,7 +9,7 @@ export class AxiosService {
     params?: Record<string, any>,
     headers?: Record<string, string>,
   ): Promise<any> {
-    return this.sendRequest('get', url, { params, headers });
+    return this._sendRequest('get', url, { params, headers });
   }
 
   async postRequest(
@@ -17,7 +17,7 @@ export class AxiosService {
     data?: any,
     headers?: Record<string, string>,
   ): Promise<any> {
-    return this.sendRequest('post', url, { data, headers });
+    return this._sendRequest('post', url, { data, headers });
   }
 
   async putRequest(
@@ -25,7 +25,7 @@ export class AxiosService {
     data?: any,
     headers?: Record<string, string>,
   ): Promise<any> {
-    return this.sendRequest('put', url, { data, headers });
+    return this._sendRequest('put', url, { data, headers });
   }
 
   async deleteRequest(
@@ -33,10 +33,10 @@ export class AxiosService {
     params?: Record<string, any>,
     headers?: Record<string, string>,
   ): Promise<any> {
-    return this.sendRequest('delete', url, { params, headers });
+    return this._sendRequest('delete', url, { params, headers });
   }
 
-  private async sendRequest(
+  private async _sendRequest(
     method: 'get' | 'post' | 'put' | 'delete',
     url: string,
     options?: AxiosRequestConfig,
@@ -55,12 +55,16 @@ export class AxiosService {
       const response: AxiosResponse = await axios(config);
       return response.data;
     } catch (error: any) {
-      throw new CustomError({
-        message: `ERRORS.${method.toUpperCase()}_RESOURCE`,
-        statusCode: HttpStatus.BAD_REQUEST,
-        module: this.constructor.name,
-        innerError: error.response?.data || error,
-      });
+      handleError(
+        {
+          error: {
+            message: `ERRORS.${method.toUpperCase()}_RESOURCE`,
+            status: HttpStatus.BAD_REQUEST,
+          },
+        },
+        `ERRORS.${method.toUpperCase()}_RESOURCE`,
+        this.constructor.name,
+      );
     }
   }
 }

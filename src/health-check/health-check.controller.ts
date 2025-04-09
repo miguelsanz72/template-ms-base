@@ -4,7 +4,7 @@ import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('/')
 export class HealthCheckController {
-  constructor(private healthService: HealthService) {}
+  constructor(private _healthService: HealthService) {}
   @Get()
   healthCheck() {
     return 'Client Gateway is up and running!!';
@@ -12,6 +12,6 @@ export class HealthCheckController {
 
   @MessagePattern('orders.health.description')
   healthCheckDescription() {
-    return this.healthService.getHealthCheck();
+    return this._healthService.getHealthCheck();
   }
 }
